@@ -1,0 +1,70 @@
+{% set name = "manim" %}
+{% set version = "0.9.0" %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/manim-{{ version }}.tar.gz
+  sha256: 23834fa6abe8741eebd28fd1da845eb082642ae724167da39cbd10cff829574f
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  entry_points:
+    - manim = manim.__main__:main
+    - manimce = manim.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=7.1
+    - click-default-group
+    - cloup >=0.7.0,<0.8.0
+    - colour
+    - decorator >=5.0.7,<6.0.0
+    - importlib-metadata  # [py<38]
+    - manimpango >=0.3.0,<0.4.0
+    - mapbox_earcut >=0.12.10,<0.13.0
+    - moderngl >=5.6.3,<6.0.0
+    - moderngl-window >=2.3.0,<3.0.0
+    - networkx >=2.5,<3.0
+    - numpy >=1.9,<2.0
+    - pillow
+    - pycairo >=1.19,<2.0
+    - pydub
+    - pygments
+    - python
+    - requests
+    - rich >=6.0
+    - scipy
+    - screeninfo >=0.6.7,<0.7.0
+    - setuptools
+    - tqdm
+    - watchdog
+
+test:
+  imports:
+    - manim
+    - manim._config
+  commands:
+    - pip check
+    - manim --help
+    - manimce --help
+  requires:
+    - pip
+
+about:
+  home: https://www.manim.community/
+  summary: Animation engine for explanatory math videos.
+  license: MIT
+  license_file: LICENSE.community
+
+extra:
+  recipe-maintainers:
+    - janjagusch
